@@ -22,6 +22,9 @@ public class Week06wargame {
             player2.draw(deck);
         }
 
+        player1.describeHand();
+        player2.describeHand();
+
         // 4. Play 26 rounds
         for (int i = 0; i < 26; i++) {
             Card card1 = player1.flip();
@@ -180,3 +183,4 @@ class Player {
     }
    
 }
+
