@@ -16,12 +16,13 @@ public class Week06wargame {
         Player player1 = new Player("Player 1");
         Player player2 = new Player("Player 2");
 
-        // 3. Deal 26 cards to each player using draw
+        // 3. Deal 26 cards to each player
         for (int i = 0; i < 26; i++) {
             player1.draw(deck);
             player2.draw(deck);
         }
 
+        // Show starting hands
         player1.describeHand();
         player2.describeHand();
 
@@ -64,123 +65,107 @@ public class Week06wargame {
     }
 }
 
-// CARD CLASS 
+
+// CARD CLASS
+
 class Card {
 
-    int value;
-    String name;
+    private int value;
+    private String name;
+    private String suit;
 
-    // Constructor
-    public Card(int value, String name) {
+    public Card(int value, String name, String suit) {
         this.value = value;
         this.name = name;
+        this.suit = suit;
     }
 
-    // Getters and setters
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSuit() {
+        return suit;
     }
 
-    // Describe method
     public void describe() {
-        System.out.println(name + " (Value: " + value + ")");
+        System.out.println(name + " of " + suit + " (Value: " + value + ")");
     }
 }
 
+
 // DECK CLASS
+
 class Deck {
 
-    List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
-    // Constructor: create 52 cards
     public Deck() {
         String[] names = {
             "Two", "Three", "Four", "Five", "Six", "Seven",
             "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"
         };
 
+        String[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
         for (int i = 0; i < names.length; i++) {
-            for (int j = 0; j < 4; j++) { // 4 suits
-                cards.add(new Card(i + 2, names[i]));
+            for (String suit : suits) {
+                cards.add(new Card(i + 2, names[i], suit));
             }
         }
     }
 
-    // Shuffle the deck
     public void shuffle() {
         Collections.shuffle(cards);
     }
 
-    // Draw the top card
     public Card draw() {
         return cards.remove(0);
     }
 }
 
-// PLAYER CLASS
+
+// PLAYER CLASS 
+
 class Player {
 
-    String name;
-    List<Card> hand = new ArrayList<>();
-    int score = 0;
+    private String name;
+    private List<Card> hand = new ArrayList<>();
+    private int score = 0;
 
-    // Constructor
     public Player(String name) {
         this.name = name;
     }
 
-    // Draw a card from a deck
     public void draw(Deck deck) {
         hand.add(deck.draw());
     }
 
-    // Flip the top card
     public Card flip() {
         return hand.remove(0);
     }
 
-    // Increment score
     public void incrementScore() {
         score++;
     }
 
-    // Getters and setters
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    // Describe player and their hand
-    public void describe() {
+    public void describeHand() {
         System.out.println(name + "'s hand contains:");
         for (Card card : hand) {
             card.describe();
         }
         System.out.println("Score: " + score);
     }
-   
 }
-
